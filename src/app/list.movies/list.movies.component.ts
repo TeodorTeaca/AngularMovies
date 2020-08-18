@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Input, OnDestroy } from '@angular/core';
 import { MoviesService } from '../services/movies.service';
 import { Subscription, interval, Observable } from 'rxjs';
 
@@ -9,24 +9,25 @@ import { Subscription, interval, Observable } from 'rxjs';
   providers: [MoviesService]
 })
 
-export class ListMoviesComponent implements OnInit {
+export class ListMoviesComponent implements OnInit, OnDestroy {
 
   constructor(private moviesService: MoviesService) { }
 
-  // image = 'http://image.tmdb.org/t/p/original/fjCezXiQWfGuNf4t7LruKky7kwV.jpg';
-
+  @Input() endpoint: string;
   private request: Subscription;
+  public posters: object[];
 
   ngOnInit(): void {
-    this.request = this.moviesService.moviesRequest('popular')
-      .subscribe((movies) => {
-        console.log(movies);
+    console.log(this.endpoint);
+    this.request = this.moviesService.moviesRequest(this.endpoint)
+      .subscribe((posters) => {
+        console.log(posters);
+        this.posters = posters;
       });
   }
 
   ngOnDestroy(): void {
     this.request.unsubscribe();
   }
-
 
 }

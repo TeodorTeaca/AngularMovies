@@ -25,7 +25,7 @@ export class LoginService {
     }
 
     getSession(token) {
-        return this.http.post(`${SESSION_URL}?api_key=${API_KEY}`, { request_token: token })
+        return this.http.post(`${SESSION_URL}`, { request_token: token })
             .pipe(
                 map((res: any) => res.data.session_id)
 

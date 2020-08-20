@@ -1,0 +1,8 @@
+<div>
+    <div *ngFor="let poster of posters">
+        <img src="{{poster.posterPath}}" />
+    </div>
+</div>
+<div *ngIf="error">
+    <p>{{error}}</p>
+</div>

@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { map, catchError } from 'rxjs/operators';
-import { TMDB_URL } from './constants';
+import { TMDB_URL, API_KEY } from './constants';
 import { throwError } from 'rxjs';
 
 const imageUrl: string = 'https://image.tmdb.org/t/p/w500';

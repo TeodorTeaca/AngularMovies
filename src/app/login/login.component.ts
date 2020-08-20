@@ -19,21 +19,17 @@ export class LoginComponent implements OnInit, OnDestroy {
     const token = localStorage.getItem("token");
     this.LoginService.getSession(token)
       .subscribe((session: string) => {
-        console.log("SESSION", session);
-        // localStorage.setItem('session', session);
+        localStorage.setItem('session', session);
       })
   }
-
 
   getToken = function () {
     this.request = this.LoginService.getToken()
       .subscribe((token: string) => {
-        this.token = token;
         window.location.assign(`${TOKEN_APPROVE}${token}?redirect_to=http://localhost:4200/login`);
         localStorage.setItem('token', token);
       })
   };
-
 
   ngOnDestroy(): void {
     this.request.unsubscribe();

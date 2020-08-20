@@ -9,6 +9,9 @@ export class InterceptorService implements HttpInterceptor {
         } else if (req.url.startsWith(`${TOKEN_URL}`)) {
             const modifiedRequest = req.clone({ url: `${req.url}?api_key=${API_KEY}` });
             return next.handle(modifiedRequest);
+        } else {
+            const modifiedRequest = req.clone({ url: `${req.url}?api_key=${API_KEY}` });
+            return next.handle(modifiedRequest);
         }
     }
 }

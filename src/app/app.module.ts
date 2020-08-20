@@ -8,9 +8,11 @@ import { LoginService } from './services/login.service';
 import { ListMoviesComponent } from './list.movies/list-movies.component';
 import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { InterceptorService } from './services/interceptor.service'
+import { AuthGuard } from './services/auth-guard.service';
+import { AuthService } from './services/auth.service';
 
 const appRoutes: Routes = [
-  { path: '', component: MoviesComponent },
+  { path: '', component: MoviesComponent, canActivate: [AuthGuard] },
   { path: 'login', component: LoginComponent },
 
 ];
@@ -27,7 +29,7 @@ const appRoutes: Routes = [
     HttpClientModule,
     RouterModule.forRoot(appRoutes)
   ],
-  providers: [{ provide: HTTP_INTERCEPTORS, useClass: InterceptorService, multi: true }],
+  providers: [{ provide: HTTP_INTERCEPTORS, useClass: InterceptorService, multi: true }, AuthGuard, AuthService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

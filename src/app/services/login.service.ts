@@ -1,26 +1,19 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { map, catchError } from 'rxjs/operators';
-import { TMDB_URL } from './constants';
 import { throwError } from 'rxjs';
-
-const imageUrl: string = 'https://image.tmdb.org/t/p/w500';
-
-interface Posters {
-    results: { poster_path: string }[];
-}
+import { TOKEN_URL, SESSION_URL, API_KEY } from './constants';
 
 @Injectable({ providedIn: 'root' })
 
-export class MoviesService {
+export class LoginService {
+
     constructor(private http: HttpClient) { }
-    moviesRequest(category: string) {
-        return this.http.get(`${TMDB_URL}movie/${category}`)
+
+    getToken() {
+        return this.http.get(`${TOKEN_URL}`)
             .pipe(
-                map((res: Posters) => res.results
-                    .map((res) => res.poster_path)
-                    .map((res) => ({ posterPath: `${imageUrl}${res}` }))
-                ),
+                map((res: any) => res.request_token),
                 catchError((error) => {
                     if (error.stauts === 401) {
                         return error.stauts;
@@ -30,4 +23,14 @@ export class MoviesService {
                 })
             )
     }
+
+    getSession(token) {
+        return this.http.post(`${SESSION_URL}?api_key=${API_KEY}`, { request_token: token })
+            .pipe(
+                map((res: any) => res.data.session_id)
+
+            )
+    }
+
+
 }

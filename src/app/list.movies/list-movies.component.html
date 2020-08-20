@@ -1,8 +1,10 @@
-<div>
-    <div *ngFor="let poster of posters">
-        <img src="{{poster.posterPath}}" />
-    </div>
-</div>
-<div *ngIf="error">
+<div *ngIf="error; else list">
     <p>{{error}}</p>
 </div>
+<ng-template #list>
+    <div class="flex">
+        <div *ngFor="let poster of posters">
+            <img src="{{poster.posterPath}}" />
+        </div>
+    </div>
+</ng-template>

@@ -2,7 +2,7 @@ import { Component, OnInit, Input, OnDestroy } from '@angular/core';
 import { MoviesService } from '../services/movies.service';
 import { Subscription } from 'rxjs';
 
-interface PosterList {
+interface Poster {
   posterPath: string;
 }
 
@@ -14,17 +14,17 @@ interface PosterList {
 })
 
 export class ListMoviesComponent implements OnInit, OnDestroy {
+
+  @Input() category: string;
+  public error: boolean;
+  public posters: Poster[];
+  private request: Subscription;
+
   constructor(private moviesService: MoviesService) { }
 
-  @Input() endpoint: string;
-  public error: boolean = null;
-  public posters: PosterList[];
-
   ngOnInit(): void {
-    console.log('ENDOINT', this.endpoint);
-    this.request = this.moviesService.moviesRequest(this.endpoint)
-      .subscribe((posters: PosterList[]) => {
-        console.log('POSTERS', posters);
+    this.request = this.moviesService.moviesRequest(this.category)
+      .subscribe((posters: Poster[]) => {
         this.posters = posters;
       },
         error => {
@@ -37,5 +37,4 @@ export class ListMoviesComponent implements OnInit, OnDestroy {
     this.request.unsubscribe();
   }
 
-  private request: Subscription;
 }

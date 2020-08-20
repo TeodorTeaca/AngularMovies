@@ -3,6 +3,6 @@ img{
     height: 60px;
     padding-right: 3px;
 }
-div{
+.flex{
     display: flex;
 }

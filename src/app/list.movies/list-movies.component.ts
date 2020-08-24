@@ -1,10 +1,7 @@
 import { Component, OnInit, Input, OnDestroy } from '@angular/core';
 import { MoviesService } from '../services/movies.service';
 import { Subscription } from 'rxjs';
-
-interface Poster {
-  posterPath: string;
-}
+import { Poster } from '../constants';
 
 @Component({
   selector: 'list-movies',

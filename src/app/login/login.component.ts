@@ -1,7 +1,8 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import { LoginService } from '../services/login.service';
-import { Subscription, Observable } from 'rxjs';
-import { TOKEN_APPROVE } from '../services/constants';
+import { Subscription } from 'rxjs';
+import { TOKEN_APPROVE } from '../constants';
+import { LocalStorage } from '../services/local-storage.service';
 
 @Component({
   selector: 'app-login',
@@ -11,28 +12,34 @@ import { TOKEN_APPROVE } from '../services/constants';
 })
 
 export class LoginComponent implements OnInit, OnDestroy {
-  private request: Subscription;
+  constructor(private loginService: LoginService, private localStorage: LocalStorage) { }
 
-  constructor(private LoginService: LoginService) { }
+  requestToken: Subscription;
+  requestSession: Subscription;
 
   ngOnInit(): void {
-    const token = localStorage.getItem("token");
-    this.LoginService.getSession(token)
-      .subscribe((session: string) => {
-        localStorage.setItem('session', session);
-      })
+    const token: string = this.localStorage.getElement('token');
+    if (!token) {
+      this.requestToken = this.loginService.getTokenRequest()
+        .subscribe((token) => {
+          this.localStorage.setElement('token', token);
+          window.location.assign(`${TOKEN_APPROVE}${token}?redirect_to=http://localhost:4200/login`);
+        })
+    }
   }
 
-  getToken = function () {
-    this.request = this.LoginService.getToken()
-      .subscribe((token: string) => {
-        window.location.assign(`${TOKEN_APPROVE}${token}?redirect_to=http://localhost:4200/login`);
-        localStorage.setItem('token', token);
+  login() {
+    const token: string = this.localStorage.getElement('token');
+    this.requestSession = this.loginService.getSessionRequest(token)
+      .subscribe((session) => {
+        this.localStorage.setElement('session', session);
       })
+
   };
 
   ngOnDestroy(): void {
-    this.request.unsubscribe();
+    this.requestToken.unsubscribe();
+    this.requestSession.unsubscribe();
   }
 
 }

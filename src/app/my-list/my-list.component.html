@@ -1,0 +1,12 @@
+<p>Create Personal List</p>
+
+<div *ngIf="error; else show">
+    <p>{{error}}</p>
+</div>
+<ng-template #show>
+    <form (ngSubmit)="createListRequest(f)" #f="ngForm">
+        <input type="text" name="listName" placeholder="Your list name" ngModel required />
+        <input type="text" name="listDescription" placeholder="Your list description" ngModel required />
+        <input type="submit" value="Create" [disabled]="!f.valid" />
+    </form>
+</ng-template>

@@ -12,36 +12,28 @@ import { LocalStorage } from '../services/local-storage.service';
 })
 
 export class MyListComponent implements OnInit, OnDestroy {
-
-  public error: boolean;
+  error: boolean;
   listName: string;
   request: Subscription;
   listDescription: string;
 
   constructor(private createList: CreateList, private localStorage: LocalStorage) { }
-
-  ngOnInit(): void {
-
-  }
+  ngOnInit(): void { }
 
   createListRequest(form: NgForm) {
-    const value = form.value;
-    this.request = this.createList.createListRequest(value.listName, value.listDescription)
+    this.request = this.createList.createListRequest(form.value.listName, form.value.listDescription)
       .subscribe((res) => {
         form.reset();
         alert(`List with ID ${res} was created!`);
         this.localStorage.setElement('list', res);
       },
         error => {
-          this.error = error.message;
+          this.error = error.error.status_message;
         }
       );
-
-
   }
 
   ngOnDestroy(): void {
-    this.request.unsubscribe;
+    this.request.unsubscribe();
   }
-
 }

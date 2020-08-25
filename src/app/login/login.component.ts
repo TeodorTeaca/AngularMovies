@@ -1,4 +1,4 @@
-import { Component, OnInit, OnDestroy } from '@angular/core';
+import { Component, OnInit, OnDestroy, Injector } from '@angular/core';
 import { LoginService } from '../services/login.service';
 import { Subscription } from 'rxjs';
 import { TOKEN_APPROVE } from '../constants';
@@ -12,7 +12,10 @@ import { LocalStorage } from '../services/local-storage.service';
 })
 
 export class LoginComponent implements OnInit, OnDestroy {
-  constructor(private loginService: LoginService, private localStorage: LocalStorage) { }
+  constructor(
+    private loginService: LoginService,
+    private localStorage: LocalStorage,
+  ) { }
 
   requestToken: Subscription;
   requestSession: Subscription;
@@ -41,5 +44,4 @@ export class LoginComponent implements OnInit, OnDestroy {
     this.requestToken.unsubscribe();
     this.requestSession.unsubscribe();
   }
-
 }

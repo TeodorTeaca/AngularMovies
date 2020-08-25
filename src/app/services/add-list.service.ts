@@ -10,16 +10,14 @@ export class CreateList {
     constructor(private http: HttpClient) { }
 
     createListRequest(listName, listDescription) {
-        return this.http.post(`${ADD_LIST_PATH}`, {
+        return this.http.post(`{REQUIRES_AUTH}${ADD_LIST_PATH}`, {
             name: listName,
             description: listDescription,
             language: "en",
         })
             .pipe(
-                map((res: any) => res.list_id),
-                catchError((error) => throwError(error))
+                map((res: any) => res.list_id)
             )
-
     }
 
 }

@@ -1,6 +1,7 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
-
 import { MyListComponent } from './my-list.component';
+import { HttpClientModule } from '@angular/common/http';
+import { FormsModule } from '@angular/forms';
 
 describe('MyListComponent', () => {
   let component: MyListComponent;
@@ -8,9 +9,10 @@ describe('MyListComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ MyListComponent ]
+      imports: [HttpClientModule, FormsModule],
+      declarations: [MyListComponent],
     })
-    .compileComponents();
+      .compileComponents();
   }));
 
   beforeEach(() => {
@@ -19,7 +21,7 @@ describe('MyListComponent', () => {
     fixture.detectChanges();
   });
 
-  it('should create', () => {
+  it('should create my-list component', () => {
     expect(component).toBeTruthy();
   });
 });

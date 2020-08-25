@@ -8,10 +8,6 @@ export class AuthService {
 
     isAuthenticated() {
         const session = this.localStorage.getElement('session');
-        if (session === null) {
-            return false;
-        } else {
-            return true;
-        }
+        return session === null ? false : true;
     }
 }

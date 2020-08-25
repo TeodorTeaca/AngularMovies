@@ -1,11 +1,10 @@
-import { Injectable } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
+import { Injectable, ErrorHandler } from '@angular/core';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { map, catchError } from 'rxjs/operators';
-import { MOVIE_PATH } from '../constants';
+import { MOVIE_PATH, IMAGE_URL } from '../constants';
 import { throwError } from 'rxjs';
 import { PostersRes } from '../constants';
-
-const imageUrl: string = 'https://image.tmdb.org/t/p/w500';
+// import { ApiError } from './api-error';
 
 @Injectable({ providedIn: 'root' })
 
@@ -13,14 +12,11 @@ export class MoviesService {
     constructor(private http: HttpClient) { }
 
     moviesRequest(category: string) {
-        const path: string = `${MOVIE_PATH}${category}`;
-        return this.http.get(path)
+        return this.http.get(`{REQUIRES_AUTH}${MOVIE_PATH}${category}`)
             .pipe(
                 map((res: PostersRes) => res.results
-                    .map((res) => res.poster_path)
-                    .map((res) => ({ posterPath: `${imageUrl}${res}` }))
-                ),
-                catchError((err) => throwError(err))
+                    .map((res) => ({ posterPath: `${IMAGE_URL}${res.poster_path}` }))
+                )
             )
     }
 }

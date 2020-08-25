@@ -1,4 +1,4 @@
-export const API_KEY: string = '?api_key=8673e8c11eae0b8c433a41602fd2ddfc';
+export const API_KEY: string = '8673e8c11eae0b8c433a41602fd2ddfc';
 export const TMDB_URL: string = 'https://api.themoviedb.org/3/';
 
 export const MOVIE_PATH: string = 'movie/';
@@ -7,6 +7,7 @@ export const SESSION_PATH: string = 'authentication/session/new';
 export const ADD_LIST_PATH: string = 'list'
 
 export const TOKEN_APPROVE: string = 'https://www.themoviedb.org/authenticate/';
+export const IMAGE_URL: string = 'https://image.tmdb.org/t/p/w500';
 
 export const TOKEN_URL: string = `${TMDB_URL}${TOKEN_PATH}`;
 export const SESSION_URL = `${TMDB_URL}${SESSION_PATH}`;
@@ -18,4 +19,12 @@ export interface Poster {
 
 export interface PostersRes {
     results: { poster_path: string }[];
+}
+
+export interface TokenRes {
+    request_token: string;
+}
+
+export interface SessionRes {
+    session_id: string;
 }

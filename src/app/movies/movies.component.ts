@@ -1,4 +1,4 @@
-import { Component, OnInit, OnDestroy } from '@angular/core';
+import { Component } from '@angular/core';
 
 @Component({
     selector: 'movies',
@@ -7,15 +7,5 @@ import { Component, OnInit, OnDestroy } from '@angular/core';
 
 })
 
-export class MoviesComponent implements OnInit, OnDestroy {
-    constructor() { }
-
-    ngOnInit(): void {
-
-    }
-
-    ngOnDestroy(): void {
-
-    }
-
+export class MoviesComponent {
 }
